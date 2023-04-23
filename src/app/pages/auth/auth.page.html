@@ -1,0 +1,87 @@
+<ion-content>
+  <app-header></app-header>
+  <app-logo></app-logo>
+  <h2 class="ion-text-center ion-no-margin">Iniciar sesión</h2>
+  <div class="content">
+    <div class="d-flex-center">
+      <form
+        (keyup.enter)="submit()"
+        (ngSubmit)="submit()"
+        class="ion-text-center"
+      >
+        <!-- ==== Email ==== -->
+
+        <app-custom-input
+          autocomplete="email"
+          [control]="form.controls.email"
+          type="email"
+          label="Correo"
+          icon="mail-outline"
+        ></app-custom-input>
+        <!-- ==== Validar Email ==== -->
+        <div
+          class="validators"
+          *ngIf="form.controls.email.errors && form.controls.email.dirty"
+        >
+          <div *ngIf="form.controls.email.errors?.['required'] ">
+            Ingresa tu Email
+          </div>
+          <div *ngIf="form.controls.email.errors?.['email'] ">
+            Ingresa un Email válido
+          </div>
+        </div>
+
+        <!-- ==== Password ==== -->
+
+        <app-custom-input
+          [control]="form.controls.password"
+          type="password"
+          label="Contraseña"
+          icon="lock-closed-outline"
+        ></app-custom-input>
+        <!-- ==== Validar Password ==== -->
+        <div
+          class="validators"
+          *ngIf="form.controls.password.errors && form.controls.password.dirty"
+        >
+          <div *ngIf="form.controls.password.errors?.['required'] ">
+            Ingresa tu Contraseña
+          </div>
+          <div *ngIf="form.controls.password.errors?.['password'] ">
+            Ingresa una Contraseña válida
+          </div>
+        </div>
+        <!-- ==== button Acceder ==== -->
+        <ion-button
+          class="ion-margin-vertical"
+          [disabled]="form.invalid"
+          type="submit"
+          shape="round"
+        >
+          Acceder <ion-icon slot="end" name="log-in-outline"></ion-icon>
+        </ion-button>
+        <!-- ==== button para ir a Registrate ==== -->
+        <div class="sign-log">
+          <p>No tienes cuenta?</p>
+          <ion-button
+            class="ion-margin-vertical"
+            shape="round"
+            routerLink="sign-up"
+          >
+            Registrate
+            <ion-icon slot="end" name="person-add-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <!-- ==== Usuarios ya cargados en firebase ==== -->
+        <p>Usuarios cargados</p>
+        <div *ngFor="let user of listUser" >
+          <ion-button class="ion-margin-vertical" color="success" shape="round clear" (click)="cargarUsuario(user)">
+            Usuario {{user.id}}
+            <ion-icon slot="end" name="person-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
